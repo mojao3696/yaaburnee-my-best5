@@ -16,15 +16,15 @@ main{position:relative;z-index:1;max-width:1000px;margin:auto;padding:28px 18px 
 @media(max-width:760px){main{padding:20px 13px 40px}.layout{grid-template-columns:1fr}.rank-panel{position:static;grid-row:1}.rank-list{grid-template-columns:1fr}.hero{padding-top:22px}}
 
 /* Floating SUPER OVERDOSE MV player */
-.mv-float{position:fixed;right:12px;top:var(--mv-top,12px);z-index:900;width:min(184px,42vw);background:#17131a;color:#fff;border:1px solid #ff3038;border-radius:13px;overflow:hidden;box-shadow:0 8px 28px #0004}
+.mv-float{position:fixed;right:12px;top:var(--mv-top,12px);z-index:900;width:160px;height:160px;display:flex;flex-direction:column;background:#17131a;color:#fff;border:1px solid #ff3038;border-radius:13px;overflow:hidden;box-shadow:0 8px 28px #0004}
 .mv-float-head{display:flex;align-items:center;justify-content:space-between;gap:6px;padding:7px 8px;font-size:.72rem;font-weight:850;letter-spacing:.02em}
 .mv-float-controls{display:flex;gap:4px}
 .mv-float-controls button{min-width:32px;min-height:30px;padding:3px 7px;border:1px solid #655c68;border-radius:7px;background:#2b222d;color:#fff;font:inherit;cursor:pointer}
-.mv-float-video{width:100%;aspect-ratio:16/9;background:#000}
-.mv-float-video iframe{width:100%;height:100%;border:0;display:block}
-.mv-float-note{padding:5px 8px;font-size:.66rem;color:#d8ceda;line-height:1.35}
+.mv-float-video,#mvPlayer{width:100%;height:90px;flex:0 0 90px;aspect-ratio:auto;background:#000;overflow:hidden}
+.mv-float-video iframe,iframe#mvPlayer{width:100%!important;height:90px!important;min-height:0!important;border:0;display:block}
+.mv-float-note{padding:4px 7px;font-size:.60rem;color:#d8ceda;line-height:1.25;overflow:hidden;flex:1;min-height:0}
 .mv-reopen{position:fixed;right:12px;top:var(--mv-top,12px);z-index:899;display:none;border:0;border-radius:999px;padding:11px 14px;background:#ff3038;color:#17131a;font-weight:900;box-shadow:0 5px 20px #0003;cursor:pointer}
-@media(max-width:420px){.mv-float{width:154px;right:8px;top:var(--mv-top,8px)}.mv-float-head{font-size:.65rem;padding:5px 6px}.mv-float-controls button{min-width:28px;min-height:27px}.mv-float-note{font-size:.60rem}.mv-reopen{right:8px;top:var(--mv-top,8px)}}
+@media(max-width:420px){.mv-float{width:154px;height:154px;right:8px;top:var(--mv-top,8px)}.mv-float-head{font-size:.65rem;padding:5px 6px;flex:0 0 auto}.mv-float-video,#mvPlayer{height:86px;flex-basis:86px}.mv-float-video iframe,iframe#mvPlayer{height:86px!important}.mv-float-controls button{min-width:28px;min-height:27px}.mv-float-note{font-size:.58rem}.mv-reopen{right:8px;top:var(--mv-top,8px)}}
 
 </style>
 </head>
@@ -261,9 +261,15 @@ function renderTracks(){
   const select=row.querySelector("select");
   if(select){select.value=idx>=0?String(idx+1):"";select.onchange=()=>setRank(t,select.value);}
   let listen=row.querySelector('.listen-link');
-  if(!listen){listen=document.createElement('a');listen.className='listen-link';listen.target='_blank';listen.rel='noopener noreferrer';listen.textContent='▶ 聴く';listen.setAttribute('aria-label',t[0]+'の公式音源・MVをYouTubeで探す');row.insertBefore(listen,select);}
-  if(t[0]==='SUPER OVERDOSE'){listen.href='https://www.youtube.com/watch?v=eulF9EhUFyE';listen.title='SUPER OVERDOSE 公式MV';listen.setAttribute('aria-label','SUPER OVERDOSE公式MVを開く');}
-  else {listen.href='https://www.youtube.com/results?search_query='+encodeURIComponent("YA'ABURNEE "+t[0]+' 公式 MV 音源');listen.title='YouTubeで公式MV・音源を探す';}
+  // These list positions have no matching audio/video destination; hide their listen buttons.
+  const noListenPositions = new Set([37,38,40,41,42,43]);
+  if(noListenPositions.has(i+1)){
+   if(listen) listen.remove();
+  }else{
+   if(!listen){listen=document.createElement('a');listen.className='listen-link';listen.target='_blank';listen.rel='noopener noreferrer';listen.textContent='▶ 聴く';listen.setAttribute('aria-label',t[0]+'の公式音源・MVをYouTubeで探す');row.insertBefore(listen,select);}
+   if(t[0]==='SUPER OVERDOSE'){listen.href='https://www.youtube.com/watch?v=eulF9EhUFyE';listen.title='SUPER OVERDOSE 公式MV';listen.setAttribute('aria-label','SUPER OVERDOSE公式MVを開く');}
+   else {listen.href='https://www.youtube.com/results?search_query='+encodeURIComponent("YA'ABURNEE "+t[0]+' 公式 MV 音源');listen.title='YouTubeで公式MV・音源を探す';}
+  }
  });
 }
 function move(i,delta){const j=i+delta;if(j<0||j>=5||!selected[i])return;[selected[i],selected[j]]=[selected[j],selected[i]];save();render()}
@@ -327,8 +333,7 @@ function drawPoster(){
    c.fillStyle='#fff';let size=t[0].length>20?27:t[0].length>14?33:40;
    c.font=`${size}px Georgia, 'Yu Mincho', serif`;
    while(c.measureText(t[0]).width>630&&size>22){size-=2;c.font=`${size}px Georgia, 'Yu Mincho', serif`;}
-   c.fillText(t[0],230,y+54);
-   c.fillStyle='#ddd';c.font='20px Georgia,serif';c.fillText("YA'ABURNEE",231,y+84);
+   c.fillText(t[0],230,y+68);
  });
  return new Promise(resolve=>canvas.toBlob(blob=>resolve(blob),'image/png'));
 }
