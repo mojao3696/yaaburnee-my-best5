@@ -15,27 +15,9 @@ main{position:relative;z-index:1;max-width:1000px;margin:auto;padding:28px 18px 
 .song-list{display:grid;gap:8px}.listen-link{display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;padding:7px 8px;border:1px solid var(--lime);border-radius:8px;color:var(--lime);text-decoration:none;font-size:.72rem;font-weight:850;white-space:nowrap}.listen-link:hover,.listen-link:focus-visible{background:var(--lime);color:#19131c}.rank-select{background:var(--bg);color:var(--text);border:1px solid var(--pink);border-radius:9px;padding:9px 7px;font:inherit;font-weight:750;max-width:100px;flex-shrink:0}.rank-select:focus{outline:2px solid var(--lime);outline-offset:2px}.song{display:flex;align-items:center;gap:12px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px}.song.selected{border-color:var(--pink);background:linear-gradient(100deg,#ffe6e8,var(--panel))}.song-title{font-weight:750;flex:1;min-width:0;overflow-wrap:anywhere}.album{font-size:.72rem;color:var(--muted);margin-top:3px}.rank-panel{position:sticky;top:14px;align-self:start;background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:17px}.rank-panel h2{font-size:1.35rem}.rank-panel .sub{color:var(--muted);font-size:.84rem;line-height:1.5;margin:7px 0 15px}.rank-list{display:grid;gap:8px}.rank-slot{display:flex;align-items:center;gap:10px;min-height:58px;padding:9px;background:var(--panel2);border:1px dashed #b7a9bb;border-radius:11px}.rank-num{display:grid;place-items:center;flex:0 0 30px;height:30px;border-radius:8px;background:var(--lime);color:#19131c;font-weight:950}.rank-name{font-size:.9rem;font-weight:750;flex:1;overflow-wrap:anywhere} .rank-empty{color:#827687;font-size:.83rem}.remove{background:transparent;color:var(--muted);border:0;font-size:1.2rem;cursor:pointer;padding:4px}.actions{display:grid;gap:8px;margin-top:14px}.primary,.secondary{border:0;border-radius:10px;padding:12px;font:inherit;font-weight:850;cursor:pointer}.primary{background:var(--pink);color:#190b14}.secondary{background:transparent;border:1px solid var(--line);color:var(--text)}.hint{font-size:.78rem;color:var(--muted);line-height:1.5;margin-top:12px} .poster-preview{display:none;margin-top:14px;padding:12px;background:#211a25;border:1px solid var(--line);border-radius:12px}.poster-preview img{display:block;width:100%;max-width:420px;margin:0 auto 10px;border-radius:8px}.poster-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}.result{display:none;margin-top:18px;background:#fffdf0;border:1px solid var(--lime);border-radius:12px;padding:14px;white-space:pre-wrap;line-height:1.7;font-size:.9rem}.foot{border-top:1px solid var(--line);margin-top:28px;padding-top:18px;color:var(--muted);font-size:.78rem;line-height:1.6}.foot a{color:var(--lime)}.empty{padding:25px;text-align:center;color:var(--muted);border:1px dashed var(--line);border-radius:12px}
 @media(max-width:760px){main{padding:20px 13px 40px}.layout{grid-template-columns:1fr}.rank-panel{position:static;grid-row:1}.rank-list{grid-template-columns:1fr}.hero{padding-top:22px}}
 
-/* Floating SUPER OVERDOSE MV player */
-.mv-float{position:fixed;right:12px;top:var(--mv-top,12px);z-index:900;width:160px;height:160px;display:flex;flex-direction:column;background:#17131a;color:#fff;border:1px solid #ff3038;border-radius:13px;overflow:hidden;box-shadow:0 8px 28px #0004}
-.mv-float-head{display:flex;align-items:center;justify-content:space-between;gap:6px;padding:7px 8px;font-size:.72rem;font-weight:850;letter-spacing:.02em}
-.mv-float-controls{display:flex;gap:4px}
-.mv-float-controls button{min-width:32px;min-height:30px;padding:3px 7px;border:1px solid #655c68;border-radius:7px;background:#2b222d;color:#fff;font:inherit;cursor:pointer}
-.mv-float-video,#mvPlayer{width:100%;height:90px;flex:0 0 90px;aspect-ratio:auto;background:#000;overflow:hidden}
-.mv-float-video iframe,iframe#mvPlayer{width:100%!important;height:90px!important;min-height:0!important;border:0;display:block}
-.mv-float-note{padding:4px 7px;font-size:.60rem;color:#d8ceda;line-height:1.25;overflow:hidden;flex:1;min-height:0}
-.mv-reopen{position:fixed;right:12px;top:var(--mv-top,12px);z-index:899;display:none;border:0;border-radius:999px;padding:11px 14px;background:#ff3038;color:#17131a;font-weight:900;box-shadow:0 5px 20px #0003;cursor:pointer}
-@media(max-width:420px){.mv-float{width:154px;height:154px;right:8px;top:var(--mv-top,8px)}.mv-float-head{font-size:.65rem;padding:5px 6px;flex:0 0 auto}.mv-float-video,#mvPlayer{height:86px;flex-basis:86px}.mv-float-video iframe,iframe#mvPlayer{height:86px!important}.mv-float-controls button{min-width:28px;min-height:27px}.mv-float-note{font-size:.58rem}.mv-reopen{right:8px;top:var(--mv-top,8px)}}
-
 </style>
 </head>
 <body>
-
-<aside class="mv-float" id="mvFloat" aria-label="SUPER OVERDOSE MVプレーヤー">
-  <div class="mv-float-head"><span>♪ SUPER OVERDOSE</span><div class="mv-float-controls"><button type="button" id="mvPlay" aria-label="MVを再生">▶</button><button type="button" id="mvHide" aria-label="MV小窓を閉じる">×</button></div></div>
-  <div class="mv-float-video" id="mvPlayer"><div style="height:100%;display:grid;place-items:center;color:#aaa;font-size:.72rem">MVを読み込み中…</div></div>
-  <div class="mv-float-note" id="mvNote">再生ボタンを押すとMVが始まります。全編リピート。</div>
-</aside>
-<button type="button" class="mv-reopen" id="mvReopen">▶ MVを表示</button>
 
 <div class="blood-texture" aria-hidden="true"></div>
 <main>
@@ -261,14 +243,15 @@ function renderTracks(){
   const select=row.querySelector("select");
   if(select){select.value=idx>=0?String(idx+1):"";select.onchange=()=>setRank(t,select.value);}
   let listen=row.querySelector('.listen-link');
-  // These list positions have no matching audio/video destination; hide their listen buttons.
-  const noListenPositions = new Set([37,38,40,41,42,43]);
-  if(noListenPositions.has(i+1)){
+  // Hide only songs whose printed title numbers are 37, 38, 40, 41, 42, and 43.
+  const noListenTitleNumbers = new Set([37,38,40,41,42,43]);
+  if(noListenTitleNumbers.has(titleNumbers[t[0]])){
    if(listen) listen.remove();
   }else{
    if(!listen){listen=document.createElement('a');listen.className='listen-link';listen.target='_blank';listen.rel='noopener noreferrer';listen.textContent='▶ 聴く';listen.setAttribute('aria-label',t[0]+'の公式音源・MVをYouTubeで探す');row.insertBefore(listen,select);}
-   if(t[0]==='SUPER OVERDOSE'){listen.href='https://www.youtube.com/watch?v=eulF9EhUFyE';listen.title='SUPER OVERDOSE 公式MV';listen.setAttribute('aria-label','SUPER OVERDOSE公式MVを開く');}
-   else {listen.href='https://www.youtube.com/results?search_query='+encodeURIComponent("YA'ABURNEE "+t[0]+' 公式 MV 音源');listen.title='YouTubeで公式MV・音源を探す';}
+   listen.href='https://www.youtube.com/results?search_query='+encodeURIComponent("YA'ABURNEE "+t[0]+' 公式 MV 音源');
+   listen.title='YouTubeで公式MV・音源を探す';
+   listen.setAttribute('aria-label',t[0]+'の公式音源・MVをYouTubeで探す');
   }
  });
 }
@@ -352,39 +335,6 @@ document.getElementById('sharePoster').addEventListener('click',async()=>{
  downloadBlob(posterBlob,'YAABURNEE_MY_BEST5.png');alert('画像を保存しました。Xなどの投稿画面で画像を添付してね！');
 });
 
-// Floating official YouTube player. User starts playback; the full video loops.
-const MV_VIDEO_ID='eulF9EhUFyE';
-function positionMvFloat(){const banner=document.querySelector('.event-banner')||document.querySelector('.hero');if(!banner)return;const r=banner.getBoundingClientRect();const top=Math.max(8,Math.round(r.bottom+8));document.documentElement.style.setProperty('--mv-top',top+'px');}
-window.addEventListener('load',positionMvFloat);window.addEventListener('resize',positionMvFloat);window.addEventListener('scroll',()=>{if(window.scrollY<120)positionMvFloat();},{passive:true});
-let mvPlayer=null;
-const mvFloat=document.getElementById('mvFloat');
-const mvNote=document.getElementById('mvNote');
-document.getElementById('mvHide').addEventListener('click',()=>{mvFloat.style.display='none';document.getElementById('mvReopen').style.display='block';});
-document.getElementById('mvReopen').addEventListener('click',()=>{mvFloat.style.display='block';document.getElementById('mvReopen').style.display='none';});
-document.getElementById('mvPlay').addEventListener('click',()=>{
-  if(mvPlayer && typeof mvPlayer.playVideo==='function'){
-    mvPlayer.playVideo();
-    mvNote.textContent='MV再生中。全編を繰り返し再生します。';
-  }else{
-    mvNote.textContent='プレーヤーを準備中です。少し待ってからもう一度押してください。';
-  }
-});
-window.onYouTubeIframeAPIReady=function(){
-  mvPlayer=new YT.Player('mvPlayer',{
-    videoId:MV_VIDEO_ID,
-    playerVars:{playsinline:1,rel:0,controls:1,loop:1,playlist:MV_VIDEO_ID,enablejsapi:1},
-    events:{
-      onReady:function(){mvNote.textContent='▶を押して再生。MV全編をリピートします。';},
-      onStateChange:function(event){
-        if(event.data===YT.PlayerState.ENDED){mvPlayer.seekTo(0,true);mvPlayer.playVideo();}
-        if(event.data===YT.PlayerState.PLAYING){mvNote.textContent='MV再生中 · 全編リピート';}
-        if(event.data===YT.PlayerState.PAUSED){mvNote.textContent='一時停止中 · ▶で再開';}
-      },
-      onError:function(){mvNote.textContent='動画を埋め込み再生できません。YouTubeで開いて再生してください。';}
-    }
-  });
-};
-const ytApi=document.createElement('script');ytApi.src='https://www.youtube.com/iframe_api';document.head.appendChild(ytApi);
 
 render();
 </script>
